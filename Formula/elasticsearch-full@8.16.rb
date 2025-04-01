@@ -83,7 +83,7 @@ class ElasticsearchFullAT816 < Formula
   end
 
   service do
-    name "#{name}"
+    name "elasticsearch-full@8.16"
     run [opt_bin/"elasticsearch"]
     working_dir var
     log_path var/"log/#{name}.log"
