@@ -4,21 +4,20 @@ class LogstashFullAT816 < Formula
   #start-auto-replace
   version "8.16.6"
   if OS.linux?
-      if Hardware::CPU.arm?
-        url "https://artifacts.elastic.co/downloads/logstash/logstash-8.16.6-linux-aarch64.tar.gz"
-        sha512 "43fdd166d50538970de1598d562c313aa9bb60235baebe0ebd6b90fde1fe06034ef6e9ed79a7f1e549f9a3fbd22508c33f4764f32654dd8b8e4125c610b203d4"
-      else
-        url "https://artifacts.elastic.co/downloads/logstash/logstash-8.16.6-linux-x86_64.tar.gz"
-        sha512 "36f6211ba08c3c16ac99598a46469589bf4676ab22b274e54f7b01d864db662d4a2b3ccf85ab7594f102fbe5ed471baeb410fb8eddd75a81409b7e0701c0c469"
-      end
+    if Hardware::CPU.arm?
+      url "https://artifacts.elastic.co/downloads/logstash/logstash-8.16.6-linux-aarch64.tar.gz"
+      sha256 "a0ddb3550f14a195025b897e557b1b9a0af879c6dcf8d249c0080b021d62e6aa"
     else
-      if Hardware::CPU.arm?
-        url "https://artifacts.elastic.co/downloads/logstash/logstash-8.16.6-darwin-aarch64.tar.gz"
-        sha512 "e9d59316b10ece87063902ee95de570f1a498df2c2ef8df9f1de1d157689bc6524742ef89ab13c75086cc2b33ad5686765a69ca69076a929e3b23b83916ba8ea"
-      else
-        url "https://artifacts.elastic.co/downloads/logstash/logstash-8.16.6-darwin-x86_64.tar.gz"
-        sha512 "2e42112cef6e1833397417641ccd4d9cd47da8e7d4ef99bea02898175a6b57e4ff065449ff5bd29d85bb3b46366402123bd633ee9ed0534af7e8f44bb8c8ba57"
-      end
+      url "https://artifacts.elastic.co/downloads/logstash/logstash-8.16.6-linux-x86_64.tar.gz"
+      sha256 "5f1bbc99779e784cdd18c8a23f134d9ba2d32dda7a4a288eebdd55f3bc11c746"
+    end
+  else
+    if Hardware::CPU.arm?
+      url "https://artifacts.elastic.co/downloads/logstash/logstash-8.16.6-darwin-aarch64.tar.gz"
+      sha256 "aa68e011ced0ba61b0d0e7636aca364b38cf56a7d3162ad47ad6a07e251a5e55"
+    else
+      url "https://artifacts.elastic.co/downloads/logstash/logstash-8.16.6-darwin-x86_64.tar.gz"
+      sha256 "7b37b031a0431297fc94e17fee54d79b272eaf712a256d7f64d6b021aac59a18"
     end
   end
   #end-auto-replace

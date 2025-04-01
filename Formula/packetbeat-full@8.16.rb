@@ -4,21 +4,20 @@ class PacketbeatFullAT816 < Formula
   #start-auto-replace
   version "8.16.6"
   if OS.linux?
-      if Hardware::CPU.arm?
-        url "https://artifacts.elastic.co/downloads/beats/packetbeat/packetbeat-8.16.6-linux-arm64.tar.gz"
-        sha512 "3a7e9b2977dff27c26e9c71acce30a1cb9ebab4326825a23c452ba675e3ee1e09310695352bb90221ee675999bef0152a27d92b3e370b762189977e61ad810d6"
-      else
-        url "https://artifacts.elastic.co/downloads/beats/packetbeat/packetbeat-8.16.6-linux-x86_64.tar.gz"
-        sha512 "b3eab5c61ed8017cdf793597ac7ecb99a9114f125def1739a87c55724b243d2fc18ecb3eef84f815646b2ec030d32cc5f6854182deda9dd2859d5c398b19faef"
-      end
+    if Hardware::CPU.arm?
+      url "https://artifacts.elastic.co/downloads/beats/packetbeat/packetbeat-8.16.6-linux-arm64.tar.gz"
+      sha256 "49dc6b1556c672469e230ba172bb20eea2e82dacddd2bdbf4f675d26b416661b"
     else
-      if Hardware::CPU.arm?
-        url "https://artifacts.elastic.co/downloads/beats/packetbeat/packetbeat-8.16.6-darwin-aarch64.tar.gz"
-        sha512 "4ff7e146044ee6169c565b642763de54085b8389d9bf2353684800282f7940d445134f8b7410bcd1e96f7ac2389eaa7c1d88c8516f66af7d2fe295ade8af435d"
-      else
-        url "https://artifacts.elastic.co/downloads/beats/packetbeat/packetbeat-8.16.6-darwin-x86_64.tar.gz"
-        sha512 "819b174c0ec59e95f606a25ea9214e812796361a70384cd8f4fb9370b6fc6cc2323c2299e79de51508417e825f4cbf0d2186cd8b2d8e1200b3f9c4b183a29e8c"
-      end
+      url "https://artifacts.elastic.co/downloads/beats/packetbeat/packetbeat-8.16.6-linux-x86_64.tar.gz"
+      sha256 "bc5a16c40c0dfc90bb25da6bb867afd3757ec53bd72c3e89024ea92ca86d0b3e"
+    end
+  else
+    if Hardware::CPU.arm?
+      url "https://artifacts.elastic.co/downloads/beats/packetbeat/packetbeat-8.16.6-darwin-aarch64.tar.gz"
+      sha256 "f7b3e10c577b32dd0d6d68ebe4ed0d9e50ea9090b47c088b1382ff139de3bfb7"
+    else
+      url "https://artifacts.elastic.co/downloads/beats/packetbeat/packetbeat-8.16.6-darwin-x86_64.tar.gz"
+      sha256 "2048efcb734a64e00cded4e1cfd00ed9253cd21ab9f0e3ae966a57bbbb52d5e6"
     end
   end
   #end-auto-replace

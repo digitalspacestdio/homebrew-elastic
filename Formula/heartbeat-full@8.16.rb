@@ -4,21 +4,20 @@ class HeartbeatFullAT816 < Formula
   #start-auto-replace
   version "8.16.6"
   if OS.linux?
-      if Hardware::CPU.arm?
-        url "https://artifacts.elastic.co/downloads/beats/heartbeat/heartbeat-8.16.6-linux-arm64.tar.gz"
-        sha512 "d8efd99bb5ad2390b464d54294060701f9c5b266c6284a33f3fa4d00a7a80c5c8ece3ca7f0af7cf54607a6a78b4af1954c2f3450b4c237dd97efb31e7bf3de39"
-      else
-        url "https://artifacts.elastic.co/downloads/beats/heartbeat/heartbeat-8.16.6-linux-x86_64.tar.gz"
-        sha512 "cf30bd70ff36919b5deceac48e30a5615fa4eccf62ff1d2095939944220926893ea301a933447251542796f986cc5d117f5ab4bb28699ef12c9546450b6bebfa"
-      end
+    if Hardware::CPU.arm?
+      url "https://artifacts.elastic.co/downloads/beats/heartbeat/heartbeat-8.16.6-linux-arm64.tar.gz"
+      sha256 "beb54739c0e18b5a9c5dc77140abb675dfb054203de0b29e8b068d0008386626"
     else
-      if Hardware::CPU.arm?
-        url "https://artifacts.elastic.co/downloads/beats/heartbeat/heartbeat-8.16.6-darwin-aarch64.tar.gz"
-        sha512 "58805ff4769e10837c44e36c57e1ad2abe9252224d485113ecf380c943e325d1c2da39b1f046af18faf003b1c13d8a95089c11b79d6147586c3848c49453d880"
-      else
-        url "https://artifacts.elastic.co/downloads/beats/heartbeat/heartbeat-8.16.6-darwin-x86_64.tar.gz"
-        sha512 "8ff2a7b20a51999ac83d9bacd80d46254a2b3217c80c08747ab2b5c4c0befd957065d244d88822623d9cec23ce4c65f496a25b056cd1ba3f16012da6b9edb282"
-      end
+      url "https://artifacts.elastic.co/downloads/beats/heartbeat/heartbeat-8.16.6-linux-x86_64.tar.gz"
+      sha256 "fad200bbbeb82f78ec362c8f73f46b0338a15006cd92776ca4b9f8b9939ec2e8"
+    end
+  else
+    if Hardware::CPU.arm?
+      url "https://artifacts.elastic.co/downloads/beats/heartbeat/heartbeat-8.16.6-darwin-aarch64.tar.gz"
+      sha256 "7c1de476aa5fc1c0565d6c16f39af7fd60c1054b786f3643de8e78d50d4e9f1a"
+    else
+      url "https://artifacts.elastic.co/downloads/beats/heartbeat/heartbeat-8.16.6-darwin-x86_64.tar.gz"
+      sha256 "fdce34ca35438e6165a51ee7b73150fc5d042395111e531c2261d589294eed6b"
     end
   end
   #end-auto-replace

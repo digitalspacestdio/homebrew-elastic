@@ -24,7 +24,7 @@ class ElasticsearchFullAT816 < Formula
   conflicts_with "elasticsearch"
 
   def cluster_name
-    "elasticsearch_#{ENV["USER"]}"
+    "#{name}_#{ENV["USER"]}"
   end
 
   def install
@@ -33,7 +33,7 @@ class ElasticsearchFullAT816 < Formula
 
     inreplace libexec/"bin/elasticsearch-env",
               "if [ -z \"$ES_PATH_CONF\" ]; then ES_PATH_CONF=\"$ES_HOME\"/config; fi",
-              "if [ -z \"$ES_PATH_CONF\" ]; then ES_PATH_CONF=\"#{etc}/elasticsearch\"; fi"
+              "if [ -z \"$ES_PATH_CONF\" ]; then ES_PATH_CONF=\"#{etc}/#{name}\"; fi"
 
     # Set up Elasticsearch for local development:
     inreplace "#{libexec}/config/elasticsearch.yml" do |s|
@@ -41,14 +41,14 @@ class ElasticsearchFullAT816 < Formula
       s.gsub!(/#\s*cluster\.name\: .*/, "cluster.name: #{cluster_name}")
 
       # 2. Configure paths
-      s.sub!(%r{#\s*path\.data: /path/to.+$}, "path.data: #{var}/lib/elasticsearch/")
-      s.sub!(%r{#\s*path\.logs: /path/to.+$}, "path.logs: #{var}/log/elasticsearch/")
+      s.sub!(%r{#\s*path\.data: /path/to.+$}, "path.data: #{var}/lib/#{name}/")
+      s.sub!(%r{#\s*path\.logs: /path/to.+$}, "path.logs: #{var}/log/#{name}/")
     end
 
-    inreplace "#{libexec}/config/jvm.options", %r{logs/gc.log}, "#{var}/log/elasticsearch/gc.log"
+    inreplace "#{libexec}/config/jvm.options", %r{logs/gc.log}, "#{var}/log/#{name}/gc.log"
 
     # Move config files into etc
-    (etc/"elasticsearch").install Dir[libexec/"config/*"]
+    (etc/"#{name}").install Dir[libexec/"config/*"]
     (libexec/"config").rmtree
 
     Dir.foreach(libexec/"bin") do |f|
@@ -64,19 +64,19 @@ class ElasticsearchFullAT816 < Formula
 
   def post_install
     # Make sure runtime directories exist
-    (var/"lib/elasticsearch/#{cluster_name}").mkpath
-    (var/"log/elasticsearch").mkpath
-    ln_s etc/"elasticsearch", libexec/"config"
-    (var/"elasticsearch/plugins").mkpath
-    ln_s var/"elasticsearch/plugins", libexec/"plugins"
+    (var/"lib/#{name}/#{cluster_name}").mkpath
+    (var/"log/#{name}").mkpath
+    ln_s etc/"#{name}", libexec/"config"
+    (var/"#{name}/plugins").mkpath
+    ln_s var/"#{name}/plugins", libexec/"plugins"
   end
 
   def caveats
     s = <<~EOS
-      Data:    #{var}/lib/elasticsearch/#{cluster_name}/
-      Logs:    #{var}/log/elasticsearch/#{cluster_name}.log
-      Plugins: #{var}/elasticsearch/plugins/
-      Config:  #{etc}/elasticsearch/
+      Data:    #{var}/lib/#{name}/#{cluster_name}/
+      Logs:    #{var}/log/#{name}/#{cluster_name}.log
+      Plugins: #{var}/#{name}/plugins/
+      Config:  #{etc}/#{name}/
     EOS
 
     s
@@ -85,8 +85,8 @@ class ElasticsearchFullAT816 < Formula
   service do
     run [opt_bin/"elasticsearch"]
     working_dir var
-    log_path var/"log/elasticsearch.log"
-    error_log_path var/"log/elasticsearch.log"
+    log_path var/"log/#{name}.log"
+    error_log_path var/"log/#{name}.log"
   end
 
   test do
@@ -97,8 +97,8 @@ class ElasticsearchFullAT816 < Formula
     server.close
 
     mkdir testpath/"config"
-    cp etc/"elasticsearch/jvm.options", testpath/"config"
-    cp etc/"elasticsearch/log4j2.properties", testpath/"config"
+    cp etc/"#{name}/jvm.options", testpath/"config"
+    cp etc/"#{name}/log4j2.properties", testpath/"config"
     touch testpath/"config/elasticsearch.yml"
 
     ENV["ES_PATH_CONF"] = testpath/"config"
