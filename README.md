@@ -1,6 +1,6 @@
 # Elastic Homebrew Tap
 
-This tap is for products in the Elastic stack.
+This tap is for products in the ELK stack.
 
 ## How do I install these formulae?
 
@@ -17,12 +17,6 @@ The following products are supported:
 * Elasticsearch `brew install digitalspacestdio/elastic/elasticsearch-full`
 * Logstash `brew install digitalspacestdio/elastic/logstash-full`
 * Kibana `brew install digitalspacestdio/elastic/kibana-full`
-* Beats
-  * Auditbeat `brew install digitalspacestdio/elastic/auditbeat-full`
-  * Filebeat `brew install digitalspacestdio/elastic/filebeat-full`
-  * Heartbeat `brew install digitalspacestdio/elastic/heartbeat-full`
-  * Metricbeat `brew install digitalspacestdio/elastic/metricbeat-full`
-  * Packetbeat `brew install digitalspacestdio/elastic/packetbeat-full`
 
 ## How do I ensure my configuration is still up to date after the branch renaming?
 
