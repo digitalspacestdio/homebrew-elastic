@@ -83,11 +83,10 @@ class ElasticsearchFullAT816 < Formula
   end
 
   service do
-    name "elasticsearch-full@8.16"
     run [opt_bin/"elasticsearch"]
     working_dir var
-    log_path var/"log/#{name}.log"
-    error_log_path var/"log/#{name}.log"
+    log_path var/"log/elasticsearch-full@8.16.log"
+    error_log_path var/"log/elasticsearch-full@8.16.log"
   end
 
   test do
