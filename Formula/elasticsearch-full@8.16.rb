@@ -62,6 +62,14 @@ class ElasticsearchFullAT816 < Formula
     system "find", "#{libexec}/jdk.app/Contents/Home/bin", "-type", "f", "-exec", "codesign", "-f", "-s", "-", "{}", ";"
   end
 
+  def supervisor_config_dir
+    etc / "digitalspace-supervisor.d"
+  end
+
+  def supervisor_config_path
+      supervisor_config_dir / "#{name}.ini"
+  end
+
   def post_install
     # Make sure runtime directories exist
     (var/"lib/#{name}/#{cluster_name}").mkpath
@@ -69,6 +77,23 @@ class ElasticsearchFullAT816 < Formula
     ln_s etc/"#{name}", libexec/"config"
     (var/"#{name}/plugins").mkpath
     ln_s var/"#{name}/plugins", libexec/"plugins"
+
+    supervisor_config =<<~EOS
+      [program:#{name}]
+      command=#{opt_bin}/elasticsearch
+      directory=#{opt_bin}
+      stdout_logfile=#{HOMEBREW_PREFIX}/var/log/digitalspace-supervisor-#{name}.log
+      stdout_logfile_maxbytes=1MB
+      stderr_logfile=#{HOMEBREW_PREFIX}/var/log/digitalspace-supervisor-#{name}.err
+      stderr_logfile_maxbytes=1MB
+      user=#{ENV['USER']}
+      autorestart=true
+      stopasgroup=true
+    EOS
+
+    supervisor_config_dir.mkpath
+    File.delete supervisor_config_path if File.exist?(supervisor_config_path)
+    supervisor_config_path.write(supervisor_config)
   end
 
   def caveats
