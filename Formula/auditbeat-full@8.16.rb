@@ -4,21 +4,20 @@ class AuditbeatFullAT816 < Formula
   #start-auto-replace
   version "8.16.6"
   if OS.linux?
-      if Hardware::CPU.arm?
-        url "https://artifacts.elastic.co/downloads/beats/auditbeat/auditbeat-8.16.6-linux-arm64.tar.gz"
-        sha512 "ba63ef1523afc14fef89d030bfd60b3b028f09a9249fa3c2e5a8ce2f7d756c8dbefa04abd6ce343173476c28b395ebcf4e29f62801d2a62af684f08c95bb807c"
-      else
-        url "https://artifacts.elastic.co/downloads/beats/auditbeat/auditbeat-8.16.6-linux-x86_64.tar.gz"
-        sha512 "dbedbd866e233b6a3402dee776cf313a92e85a2d60c8ce3573f26fe401db7148dee69fbc0854292894f0beb62b23ae24f986e727a26819f413aacd8c45a080e4"
-      end
+    if Hardware::CPU.arm?
+      url "https://artifacts.elastic.co/downloads/beats/auditbeat/auditbeat-8.16.6-linux-arm64.tar.gz"
+      sha256 "bf5a40325bb3d1b245a80ef683672d0e132015606f52400ab87f934c976bda93"
     else
-      if Hardware::CPU.arm?
-        url "https://artifacts.elastic.co/downloads/beats/auditbeat/auditbeat-8.16.6-darwin-aarch64.tar.gz"
-        sha512 "1f08d2d7ecabf830149ef37a54feddacff0e1670cb46fef9427a5f81be916e8a390aab39c0d440cc0ad33cd8f2b2320d73b945e451edaa248bff7611d9b78d86"
-      else
-        url "https://artifacts.elastic.co/downloads/beats/auditbeat/auditbeat-8.16.6-darwin-x86_64.tar.gz"
-        sha512 "52a253606e4b00b248f3ad5e2d3e20635cdfc10298f49eeb0b4eb2f1acc92b30a3c85716c37abef12b0f05de738fa6a09f18dee6c9f031b314aa42fc5400b81a"
-      end
+      url "https://artifacts.elastic.co/downloads/beats/auditbeat/auditbeat-8.16.6-linux-x86_64.tar.gz"
+      sha256 "bef0b6ca649795c1b00de37c4fde6b02e06d155013663e9e739ff7d4e169a1dc"
+    end
+  else
+    if Hardware::CPU.arm?
+      url "https://artifacts.elastic.co/downloads/beats/auditbeat/auditbeat-8.16.6-darwin-aarch64.tar.gz"
+      sha256 "72950aa3b3541958d2e47ed797832af20964e340ac3e75ae1dae6ac785d4cdf0"
+    else
+      url "https://artifacts.elastic.co/downloads/beats/auditbeat/auditbeat-8.16.6-darwin-x86_64.tar.gz"
+      sha256 "415223ee99700c6ef092f4f3c7afe0952371ab26e188b13173d5bf8f5b2c1a39"
     end
   end
   #end-auto-replace

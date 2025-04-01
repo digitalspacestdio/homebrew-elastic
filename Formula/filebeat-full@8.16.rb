@@ -4,21 +4,20 @@ class FilebeatFullAT816 < Formula
   #start-auto-replace
   version "8.16.6"
   if OS.linux?
-      if Hardware::CPU.arm?
-        url "https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-8.16.6-linux-arm64.tar.gz"
-        sha512 "96b1b4e5b259296d5ad0fb1769bf800eef2919b5bb105103c733bb49b59001a9f2f4899e6eb16c474e4d239b5791958c7248272f71723d897408e36580c0e740"
-      else
-        url "https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-8.16.6-linux-x86_64.tar.gz"
-        sha512 "c40b25d7f38809f770124bb555a824e32ec8b7961b0f94935f1c896581ff3dd11886720297a36256bdabbeefcfb9176faa96f65afd58163ebc93633ebd80c745"
-      end
+    if Hardware::CPU.arm?
+      url "https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-8.16.6-linux-arm64.tar.gz"
+      sha256 "d08bc770753e9b3137d145ad38581f57e91ecf64030adff7c26eb92627f895f7"
     else
-      if Hardware::CPU.arm?
-        url "https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-8.16.6-darwin-aarch64.tar.gz"
-        sha512 "92e8e6a6296f2e72d224cb2524307cd6806af080ddbfa20e6713a2742ac305b0c299bbd7592851bcd8cc86b4f058c1e9e148ef66589af5e62d744018fd51f3ad"
-      else
-        url "https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-8.16.6-darwin-x86_64.tar.gz"
-        sha512 "cdaa2fbc47df542b87ee21e913edab1fc47d82cdaefe64359d64f1a869ff22cfe2a643ab36821fb3223469cc2fcec8e79e52b006c913d1b863bbc231359a1dda"
-      end
+      url "https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-8.16.6-linux-x86_64.tar.gz"
+      sha256 "dcb8da47df8c42ece1b15334b5e25bb4e51fc93a325944133aa7bcdee072e453"
+    end
+  else
+    if Hardware::CPU.arm?
+      url "https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-8.16.6-darwin-aarch64.tar.gz"
+      sha256 "df1a226a7fd2225d28c1cea19109d4603e2a0f34630aadc737302d946f73d025"
+    else
+      url "https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-8.16.6-darwin-x86_64.tar.gz"
+      sha256 "8c1e420fe1e5ab9f6347c483837c32b87048b9e3b1776e2552d38d8b49a3a04e"
     end
   end
   #end-auto-replace

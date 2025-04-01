@@ -18,41 +18,36 @@ while read MINOR_VERSION; do
       fi
       echo "Updating to version $VERSION"
 
-      for os in "${OS[@]}"; do
-        for arch in "${ARCH[@]}"; do
-         LINUX_AARCH64_URL=$(pup 'a:contains("Linux aarch64") attr{href}' -f <(curl https://www.elastic.co/downloads/past-releases/$(echo $app | awk -F- '{ print $1 }')-$(echo $VERSION | sed s~\\.~-~g)))
-         LINUX_AARCH64_SHA512=$(curl -s $LINUX_AARCH64_URL.sha512 | awk '{ print $1 }')
-         LINUX_X86_64_URL=$(pup 'a:contains("Linux x86_64") attr{href}' -f <(curl https://www.elastic.co/downloads/past-releases/$(echo $app | awk -F- '{ print $1 }')-$(echo $VERSION | sed s~\\.~-~g)))
-         LINUX_X86_64_SHA512=$(curl -s $LINUX_X86_64_URL.sha512 | awk '{ print $1 }')
-         MACOS_AARCH64_URL=$(pup 'a:contains("macOS aarch64") attr{href}' -f <(curl https://www.elastic.co/downloads/past-releases/$(echo $app | awk -F- '{ print $1 }')-$(echo $VERSION | sed s~\\.~-~g)))
-         MACOS_AARCH64_SHA512=$(curl -s $MACOS_AARCH64_URL.sha512 | awk '{ print $1 }')
-         MACOS_X86_64_URL=$(pup 'a:contains("macOS x86_64") attr{href}' -f <(curl https://www.elastic.co/downloads/past-releases/$(echo $app | awk -F- '{ print $1 }')-$(echo $VERSION | sed s~\\.~-~g)))
-         MACOS_X86_64_SHA512=$(curl -s $MACOS_X86_64_URL.sha512 | awk '{ print $1 }')
-          export CONFIG='#start-auto-replace
+      LINUX_AARCH64_URL=$(pup 'a:contains("Linux aarch64") attr{href}' -f <(curl https://www.elastic.co/downloads/past-releases/$(echo $app | awk -F- '{ print $1 }')-$(echo $VERSION | sed s~\\.~-~g)))
+      LINUX_AARCH64_SHA256=$(curl -s $LINUX_AARCH64_URL | shasum -a 256 | awk '{ print $1 }')
+      LINUX_X86_64_URL=$(pup 'a:contains("Linux x86_64") attr{href}' -f <(curl https://www.elastic.co/downloads/past-releases/$(echo $app | awk -F- '{ print $1 }')-$(echo $VERSION | sed s~\\.~-~g)))
+      LINUX_X86_64_SHA256=$(curl -s $LINUX_X86_64_URL | shasum -a 256 | awk '{ print $1 }')
+      MACOS_AARCH64_URL=$(pup 'a:contains("macOS aarch64") attr{href}' -f <(curl https://www.elastic.co/downloads/past-releases/$(echo $app | awk -F- '{ print $1 }')-$(echo $VERSION | sed s~\\.~-~g)))
+      MACOS_AARCH64_SHA256=$(curl -s $MACOS_AARCH64_URL | shasum -a 256 | awk '{ print $1 }')
+      MACOS_X86_64_URL=$(pup 'a:contains("macOS x86_64") attr{href}' -f <(curl https://www.elastic.co/downloads/past-releases/$(echo $app | awk -F- '{ print $1 }')-$(echo $VERSION | sed s~\\.~-~g)))
+      MACOS_X86_64_SHA256=$(curl -s $MACOS_X86_64_URL | shasum -a 256 | awk '{ print $1 }')
+      export CONFIG='#start-auto-replace
   version "'$VERSION'"
   if OS.linux?
-      if Hardware::CPU.arm?
-        url "'$LINUX_AARCH64_URL'"
-        sha512 "'$LINUX_AARCH64_SHA512'"
-      else
-        url "'$LINUX_X86_64_URL'"
-        sha512 "'$LINUX_X86_64_SHA512'"
-      end
+    if Hardware::CPU.arm?
+      url "'$LINUX_AARCH64_URL'"
+      sha256 "'$LINUX_AARCH64_SHA256'"
     else
-      if Hardware::CPU.arm?
-        url "'$MACOS_AARCH64_URL'"
-        sha512 "'$MACOS_AARCH64_SHA512'"
-      else
-        url "'$MACOS_X86_64_URL'"
-        sha512 "'$MACOS_X86_64_SHA512'"
-      end
+      url "'$LINUX_X86_64_URL'"
+      sha256 "'$LINUX_X86_64_SHA256'"
+    end
+  else
+    if Hardware::CPU.arm?
+      url "'$MACOS_AARCH64_URL'"
+      sha256 "'$MACOS_AARCH64_SHA256'"
+    else
+      url "'$MACOS_X86_64_URL'"
+      sha256 "'$MACOS_X86_64_SHA256'"
     end
   end
   #end-auto-replace'
 
-          perl -i -p0e 's/#start-auto-replace.*?\#end-auto-replace/'\$ENV{"CONFIG"}'/s' ${DIR}/../Formula/$app@$MINOR_VERSION.rb
-        done
-      done
+      perl -i -p0e 's/#start-auto-replace.*?\#end-auto-replace/'\$ENV{"CONFIG"}'/s' ${DIR}/../Formula/$app@$MINOR_VERSION.rb
     fi
   done
 
