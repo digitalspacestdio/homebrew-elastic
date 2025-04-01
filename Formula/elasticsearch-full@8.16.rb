@@ -1,10 +1,26 @@
-class ElasticsearchFullAT717 < Formula
+class ElasticsearchFullAT816 < Formula
   desc "Distributed search & analytics engine"
   homepage "https://www.elastic.co/products/elasticsearch"
   #start-auto-replace
-  url "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.17.28-darwin-x86_64.tar.gz?tap=elastic/homebrew-tap"
-  version "7.17.28"
-  sha256 "6d2343171a0d384910312220aae3512f45e3d3d900557b736c139b8363a008e4"
+  version "8.16.6"
+  if OS.linux?
+      if Hardware::CPU.arm?
+        url "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-8.16.6-linux-aarch64.tar.gz"
+        sha512 "93f20b34081b849a4ca076c9170654c022572d1f0a06b69d90b393aa45776f75ec9c5f250f464219bb02340c943d1c81b02403fdcab2561675d348980673f3f3"
+      else
+        url "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-8.16.6-linux-x86_64.tar.gz"
+        sha512 "5e80633a81471c3b7c00fc530cf2e7d12a622d2f716d83c3629b901fb45f3b17ff6d7480307d5cf8bc3a36df5222c7414f36f63e90284e227060dd98045f7efe"
+      end
+    else
+      if Hardware::CPU.arm?
+        url "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-8.16.6-darwin-aarch64.tar.gz"
+        sha512 "bb17950ca5b3c2a3124cdc9b8e4dd42abf216a1c77b70838872db615f8f0db39c6745d563ac9cd8cb6385ae68bab8a58614f9c0333e8e295b4101d197be76fe4"
+      else
+        url "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-8.16.6-darwin-x86_64.tar.gz"
+        sha512 "cd254c4b130f26a561660c8342f8368e0ee0966403eadef88095520f1e15e1b95ae86651c8ba51c972fd67849b72179285b3cca6e6634e6cda9fa824deee42c5"
+      end
+    end
+  end
   #end-auto-replace
   conflicts_with "elasticsearch"
 

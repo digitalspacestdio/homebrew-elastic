@@ -1,11 +1,29 @@
-class HeartbeatOssAT717 < Formula
+class HeartbeatFullAT816 < Formula
   desc "Lightweight Shipper for Uptime Monitoring"
   homepage "https://www.elastic.co/products/beats/heartbeat"
-  url "https://artifacts.elastic.co/downloads/beats/heartbeat/heartbeat-oss-7.17.28-darwin-x86_64.tar.gz?tap=elastic/homebrew-tap"
-  version "7.17.28"
-  sha256 "562775948127b9b4621f220fdb219e5a6f0c48a55a7b75916da8a77a18b47d26"
+  #start-auto-replace
+  version "8.16.6"
+  if OS.linux?
+      if Hardware::CPU.arm?
+        url "https://artifacts.elastic.co/downloads/beats/heartbeat/heartbeat-8.16.6-linux-arm64.tar.gz"
+        sha512 "d8efd99bb5ad2390b464d54294060701f9c5b266c6284a33f3fa4d00a7a80c5c8ece3ca7f0af7cf54607a6a78b4af1954c2f3450b4c237dd97efb31e7bf3de39"
+      else
+        url "https://artifacts.elastic.co/downloads/beats/heartbeat/heartbeat-8.16.6-linux-x86_64.tar.gz"
+        sha512 "cf30bd70ff36919b5deceac48e30a5615fa4eccf62ff1d2095939944220926893ea301a933447251542796f986cc5d117f5ab4bb28699ef12c9546450b6bebfa"
+      end
+    else
+      if Hardware::CPU.arm?
+        url "https://artifacts.elastic.co/downloads/beats/heartbeat/heartbeat-8.16.6-darwin-aarch64.tar.gz"
+        sha512 "58805ff4769e10837c44e36c57e1ad2abe9252224d485113ecf380c943e325d1c2da39b1f046af18faf003b1c13d8a95089c11b79d6147586c3848c49453d880"
+      else
+        url "https://artifacts.elastic.co/downloads/beats/heartbeat/heartbeat-8.16.6-darwin-x86_64.tar.gz"
+        sha512 "8ff2a7b20a51999ac83d9bacd80d46254a2b3217c80c08747ab2b5c4c0befd957065d244d88822623d9cec23ce4c65f496a25b056cd1ba3f16012da6b9edb282"
+      end
+    end
+  end
+  #end-auto-replace
   conflicts_with "heartbeat"
-  conflicts_with "heartbeat-full"
+  conflicts_with "heartbeat-oss"
 
   def install
     ["fields.yml", "ingest", "kibana", "module"].each { |d| libexec.install d if File.exist?(d) }

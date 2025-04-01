@@ -1,9 +1,11 @@
 class MetricbeatFullAT717 < Formula
   desc "Collect metrics from your systems and services"
   homepage "https://www.elastic.co/products/beats/metricbeat"
+  #start-auto-replace
   url "https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-7.17.28-darwin-x86_64.tar.gz?tap=elastic/homebrew-tap"
   version "7.17.28"
   sha256 "c325eca152153feeafbbd8ae1ec02001adf8d90918da6af8a28e8fe88c51f042"
+  #end-auto-replace
   conflicts_with "metricbeat"
   conflicts_with "metricbeat-oss"
 

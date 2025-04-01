@@ -1,9 +1,27 @@
 class AuditbeatFullAT717 < Formula
   desc "Lightweight Shipper for Audit Data"
   homepage "https://www.elastic.co/products/beats/auditbeat"
-  url "https://artifacts.elastic.co/downloads/beats/auditbeat/auditbeat-7.17.28-darwin-x86_64.tar.gz?tap=elastic/homebrew-tap"
+  #start-auto-replace
   version "7.17.28"
-  sha256 "ef842a52a573ed658e8109410570f651e9208f2156008afbcf253c6daf35aee5"
+  if OS.linux?
+      if Hardware::CPU.arm?
+        url "https://artifacts.elastic.co/downloads/auditbeat/auditbeat-full-7.17.28-linux-aarch64.tar.gz"
+        sha256 "replace_with_linux_arm64_sha256"
+      else
+        url "https://artifacts.elastic.co/downloads/auditbeat/auditbeat-full-7.17.28-linux-x86_64.tar.gz"
+        sha256 "replace_with_linux_x86_64_sha256"
+      end
+    else
+      if Hardware::CPU.arm?
+        url "https://artifacts.elastic.co/downloads/auditbeat/auditbeat-full-7.17.28-macos-aarch64.tar.gz"
+        sha256 "replace_with_mac_arm64_sha256"
+      else
+        url "https://artifacts.elastic.co/downloads/auditbeat/auditbeat-full-7.17.28-macos-x86_64.tar.gz"
+        sha256 "replace_with_mac_x86_64_sha256"
+      end
+    end
+  end
+  #end-auto-replace
   conflicts_with "auditbeat"
   conflicts_with "auditbeat-oss"
 

@@ -1,11 +1,29 @@
-class MetricbeatOssAT717 < Formula
+class MetricbeatFullAT816 < Formula
   desc "Collect metrics from your systems and services"
   homepage "https://www.elastic.co/products/beats/metricbeat"
-  url "https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-oss-7.17.28-darwin-x86_64.tar.gz?tap=elastic/homebrew-tap"
-  version "7.17.28"
-  sha256 "2fa07950504f2269e8f05258358ccc6fa63b43021b34538c2d54ae3c33d8f5a1"
+  #start-auto-replace
+  version "8.16.6"
+  if OS.linux?
+      if Hardware::CPU.arm?
+        url "https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-8.16.6-linux-arm64.tar.gz"
+        sha512 "54eca333d8b43e76ffbf44e5fcd863bf0628fcd032a01778ab4f478b4e554160be328834727ab79e02af1d992c9e595d19a9e9a4d3918a65b073c7c30a55002c"
+      else
+        url "https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-8.16.6-linux-x86_64.tar.gz"
+        sha512 "3d712667279a8c6dc2c6bfa00fbe440171d8a320fa92cb00527a70b883039d96cfca207d0361389e928fbf2d1458074eddce97277c5823bcc8050d0da8f603de"
+      end
+    else
+      if Hardware::CPU.arm?
+        url "https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-8.16.6-darwin-aarch64.tar.gz"
+        sha512 "ddf3de0f90cd4704116bca4bc5df7de016c5b0fb02c9192c37f75a9ae8f3037956bff24bd49456f394518b13d0563eb21f1f5def4785d21c3af602cc467c9594"
+      else
+        url "https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-8.16.6-darwin-x86_64.tar.gz"
+        sha512 "990f676ce319f3df4dc74b1c17c3446c496c4923152b24d382d1de7d33588360031e3324f4a1ce35f1c6b42596ae1054e0bdb79d2f5d332a129161d0adac4c3a"
+      end
+    end
+  end
+  #end-auto-replace
   conflicts_with "metricbeat"
-  conflicts_with "metricbeat-full"
+  conflicts_with "metricbeat-oss"
 
   def install
     ["fields.yml", "ingest", "kibana", "module"].each { |d| libexec.install d if File.exist?(d) }

@@ -2,54 +2,38 @@
 
 This tap is for products in the Elastic stack.
 
-**WARNING: main is now the default branch**
-
-Since October 2021, the default branch is renamed from `master` to `main`.
-
-The `master` branch is no longer updated and will be **deleted on June 1st, 2023**.
-
-Please [follow the instructions to update](#how-do-i-ensure-my-configuration-is-up-to-date) your configuration.
-
-
 ## How do I install these formulae?
 
 Install the tap via:
 
-    brew tap elastic/tap
+    brew tap digitalspace/elastic
 
 Then you can install individual products via:
 
-    brew install elastic/tap/elasticsearch-full
+    brew install digitalspace/elastic/elasticsearch-full
 
 The following products are supported:
 
-* Elasticsearch `brew install elastic/tap/elasticsearch-full`
-* Logstash `brew install elastic/tap/logstash-full`
-* Kibana `brew install elastic/tap/kibana-full`
+* Elasticsearch `brew install digitalspace/elastic/elasticsearch-full`
+* Logstash `brew install digitalspace/elastic/logstash-full`
+* Kibana `brew install digitalspace/elastic/kibana-full`
 * Beats
-  * Auditbeat `brew install elastic/tap/auditbeat-full`
-  * Filebeat `brew install elastic/tap/filebeat-full`
-  * Heartbeat `brew install elastic/tap/heartbeat-full`
-  * Metricbeat `brew install elastic/tap/metricbeat-full`
-  * Packetbeat `brew install elastic/tap/packetbeat-full`
-* APM server `brew install elastic/tap/apm-server-full`
-* Elastic Cloud Control (ecctl) `brew install elastic/tap/ecctl`
-
-For Logstash, Beats and APM server, we fully support the OSS distributions
-too; replace `-full` with `-oss` in any of the above commands to install the 
-OSS distribution. Note that the default distribution and OSS distribution of
-a product can not be installed at the same time.
+  * Auditbeat `brew install digitalspace/elastic/auditbeat-full`
+  * Filebeat `brew install digitalspace/elastic/filebeat-full`
+  * Heartbeat `brew install digitalspace/elastic/heartbeat-full`
+  * Metricbeat `brew install digitalspace/elastic/metricbeat-full`
+  * Packetbeat `brew install digitalspace/elastic/packetbeat-full`
 
 ## How do I ensure my configuration is still up to date after the branch renaming?
 
 Run the following command to update your configuration:
 
-    brew untap elastic/tap --force
-    brew tap elastic/tap
+    brew untap digitalspace/elastic --force
+    brew tap digitalspace/elastic
 
 Verify your configuration is based on the `main` branch with:
 
-    git -C /usr/local/homebrew/Library/Taps/elastic/homebrew-tap status
+    git -C $(brew --prefix)/Library/Taps/elastic/homebrew-tap status
 
 You should have the following output:
 
