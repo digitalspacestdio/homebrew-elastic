@@ -45,7 +45,10 @@ class ElasticsearchFullAT816 < Formula
       s.sub!(%r{#\s*path\.logs: /path/to.+$}, "path.logs: #{var}/log/#{name}/")
     
       # 3. Disable X-Pack security for local usage
-      s.insert(s.length, "\nxpack.security.enabled: false\n") unless s.to_s.include?("xpack.security.enabled")
+      original = s.to_s
+      unless original.include?("xpack.security.enabled")
+        s.gsub!(/.*\z/, "#{original}\nxpack.security.enabled: false\n")
+      end
     end
 
     inreplace "#{libexec}/config/jvm.options", %r{logs/gc.log}, "#{var}/log/#{name}/gc.log"
