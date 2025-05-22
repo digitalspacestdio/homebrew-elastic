@@ -54,17 +54,26 @@ class ElasticsearchFullAT816 < Formula
     inreplace "#{libexec}/config/jvm.options", %r{logs/gc.log}, "#{var}/log/#{name}/gc.log"
 
     # Replace or insert heap settings for development
-    inreplace "#{libexec}/config/jvm.options", false do |s|
-      # Replace or insert -Xms
-      unless s.gsub!(/^-Xms.*$/, "-Xms128m")
-        s.gsub!(/.*\z/, "#{s}\n-Xms128m\n")
-      end
-      
-      # Replace or insert -Xmx
-      unless s.gsub!(/^-Xmx.*$/, "-Xmx1g")
-        s.gsub!(/.*\z/, "#{s}\n-Xmx1g\n")
-      end
+    jvm_path = "#{libexec}/config/jvm.options"
+    jvm_contents = File.read(jvm_path)
+    
+    # Ensure -Xms exists or is replaced
+    unless jvm_contents.match?(/^-Xms/)
+      jvm_contents << "\n-Xms128m\n"
+    else
+      jvm_contents.gsub!(/^-Xms.*$/, "-Xms128m")
     end
+    
+    # Ensure -Xmx exists or is replaced
+    unless jvm_contents.match?(/^-Xmx/)
+      jvm_contents << "\n-Xmx1g\n"
+    else
+      jvm_contents.gsub!(/^-Xmx.*$/, "-Xmx1g")
+    end
+    
+    # Overwrite the file manually
+    File.write(jvm_path, jvm_contents)
+
 
     # Move config files into etc
     (etc/"#{name}").install Dir[libexec/"config/*"]
