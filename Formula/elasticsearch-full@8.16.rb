@@ -54,16 +54,17 @@ class ElasticsearchFullAT816 < Formula
     inreplace "#{libexec}/config/jvm.options", %r{logs/gc.log}, "#{var}/log/#{name}/gc.log"
 
     # Replace or insert heap settings for development
-    inreplace "#{libexec}/config/jvm.options" do |s|
-      unless s.gsub!(/^(-Xms).*$/, "\\1 128m")
+    inreplace "#{libexec}/config/jvm.options", false do |s|
+      # Replace or insert -Xms
+      unless s.gsub!(/^-Xms.*$/, "-Xms128m")
         s.gsub!(/.*\z/, "#{s}\n-Xms128m\n")
       end
-    
-      unless s.gsub!(/^(-Xmx).*$/, "\\1 1g")
+      
+      # Replace or insert -Xmx
+      unless s.gsub!(/^-Xmx.*$/, "-Xmx1g")
         s.gsub!(/.*\z/, "#{s}\n-Xmx1g\n")
       end
     end
-
 
     # Move config files into etc
     (etc/"#{name}").install Dir[libexec/"config/*"]
