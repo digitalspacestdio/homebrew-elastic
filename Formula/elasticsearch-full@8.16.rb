@@ -45,18 +45,15 @@ class ElasticsearchFullAT816 < Formula
       s.sub!(%r{#\s*path\.logs: /path/to.+$}, "path.logs: #{var}/log/#{name}/")
     
       # 3. Disable X-Pack security for local usage
-      unless s.include?("xpack.security.enabled")
-        s << "\nxpack.security.enabled: false\n"
-      end
+      s << "\nxpack.security.enabled: false\n" unless s.to_s.include?("xpack.security.enabled")
     end
-
 
     inreplace "#{libexec}/config/jvm.options", %r{logs/gc.log}, "#{var}/log/#{name}/gc.log"
 
     # Replace or insert heap settings for development
     inreplace "#{libexec}/config/jvm.options" do |s|
-      s.gsub!(/^(-Xms).*$/, "\\1 128m") unless s.include?("-Xms128m")
-      s.gsub!(/^(-Xmx).*$/, "\\1 1g") unless s.include?("-Xmx1g")
+      s.gsub!(/^(-Xms).*$/, "\\1 128m") unless s.to_s.include?("-Xms128m")
+      s.gsub!(/^(-Xmx).*$/, "\\1 1g") unless s.to_s.include?("-Xmx1g")
     end
 
     # Move config files into etc
