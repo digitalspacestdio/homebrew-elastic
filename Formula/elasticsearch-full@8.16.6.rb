@@ -1,8 +1,9 @@
-class ElasticsearchFullAT717 < Formula
+class ElasticsearchFullAT8166 < Formula
   desc "Distributed search & analytics engine"
   homepage "https://www.elastic.co/products/elasticsearch"
   #start-auto-replace
   version "8.16.6"
+  revision 1
   if OS.linux?
     if Hardware::CPU.arm?
       url "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-8.16.6-linux-aarch64.tar.gz"
@@ -39,17 +40,45 @@ class ElasticsearchFullAT717 < Formula
     inreplace "#{libexec}/config/elasticsearch.yml" do |s|
       # 1. Give the cluster a unique name
       s.gsub!(/#\s*cluster\.name\: .*/, "cluster.name: #{cluster_name}")
-
+    
       # 2. Configure paths
       s.sub!(%r{#\s*path\.data: /path/to.+$}, "path.data: #{var}/lib/#{name}/")
       s.sub!(%r{#\s*path\.logs: /path/to.+$}, "path.logs: #{var}/log/#{name}/")
+    
+      # 3. Disable X-Pack security for local usage
+      original = s.to_s
+      unless original.include?("xpack.security.enabled")
+        s.gsub!(/.*\z/, "#{original}\nxpack.security.enabled: false\n")
+      end
     end
 
     inreplace "#{libexec}/config/jvm.options", %r{logs/gc.log}, "#{var}/log/#{name}/gc.log"
 
+    # Replace or insert heap settings for development
+    jvm_path = "#{libexec}/config/jvm.options"
+    jvm_contents = File.read(jvm_path)
+    
+    # Ensure -Xms exists or is replaced
+    unless jvm_contents.match?(/^-Xms/)
+      jvm_contents << "\n-Xms128m\n"
+    else
+      jvm_contents.gsub!(/^-Xms.*$/, "-Xms128m")
+    end
+    
+    # Ensure -Xmx exists or is replaced
+    unless jvm_contents.match?(/^-Xmx/)
+      jvm_contents << "\n-Xmx1g\n"
+    else
+      jvm_contents.gsub!(/^-Xmx.*$/, "-Xmx1g")
+    end
+    
+    # Overwrite the file manually
+    File.write(jvm_path, jvm_contents)
+
+
     # Move config files into etc
     (etc/"#{name}").install Dir[libexec/"config/*"]
-    (libexec/"config").rmtree
+    FileUtils.rm_r(libexec/"config")
 
     Dir.foreach(libexec/"bin") do |f|
       next if f == "." || f == ".." || !File.extname(f).empty?
@@ -58,8 +87,15 @@ class ElasticsearchFullAT717 < Formula
     end
     bin.env_script_all_files(libexec/"bin", {})
 
-    system "codesign", "-f", "-s", "-", "#{libexec}/modules/x-pack-ml/platform/darwin-x86_64/controller.app", "--deep"
-    system "find", "#{libexec}/jdk.app/Contents/Home/bin", "-type", "f", "-exec", "codesign", "-f", "-s", "-", "{}", ";"
+    if OS.mac?
+        if Hardware::CPU.arm?
+            system "codesign", "-f", "-s", "-", "#{libexec}/modules/x-pack-ml/platform/darwin-aarch64/controller.app", "--deep"
+            system "find", "#{libexec}/jdk.app/Contents/Home/bin", "-type", "f", "-exec", "codesign", "-f", "-s", "-", "{}", ";"
+        else
+            system "codesign", "-f", "-s", "-", "#{libexec}/modules/x-pack-ml/platform/darwin-x86_64/controller.app", "--deep"
+            system "find", "#{libexec}/jdk.app/Contents/Home/bin", "-type", "f", "-exec", "codesign", "-f", "-s", "-", "{}", ";"
+        end
+    end
   end
 
   def supervisor_config_dir
@@ -110,8 +146,8 @@ class ElasticsearchFullAT717 < Formula
   service do
     run [opt_bin/"elasticsearch"]
     working_dir var
-    log_path var/"log/elasticsearch-full@7.17.log"
-    error_log_path var/"log/elasticsearch-full@7.17.log"
+    log_path var/"log/elasticsearch-full@8.16.log"
+    error_log_path var/"log/elasticsearch-full@8.16.log"
   end
 
   test do

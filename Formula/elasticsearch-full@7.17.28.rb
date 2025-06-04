@@ -1,23 +1,24 @@
-class ElasticsearchFullAT816 < Formula
+class ElasticsearchFullAT71728 < Formula
   desc "Distributed search & analytics engine"
   homepage "https://www.elastic.co/products/elasticsearch"
   #start-auto-replace
-  version "8.16.6"
+  version "7.17.28"
+  revision 1
   if OS.linux?
     if Hardware::CPU.arm?
-      url "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-8.16.6-linux-aarch64.tar.gz"
-      sha256 "189bad46928bc01cfe5090ff784340bc187b1b8f0a03528aecebe1575859691d"
+      url "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.17.28-linux-aarch64.tar.gz"
+      sha256 "98d43b9fa74f45960dc8c697bdecc9bee1e8424958f86fe5489748eace0e8ec5"
     else
-      url "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-8.16.6-linux-x86_64.tar.gz"
-      sha256 "308a5ef379550fd5c8d65b77052f2fc2efabc124a98c4bbc2c89a84ce82b781d"
+      url "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.17.28-linux-x86_64.tar.gz"
+      sha256 "d72adef80b899eb624f6e14aa3b0d8c2ed6597e5fe328bbb1ed9de2c3c14ef28"
     end
   else
     if Hardware::CPU.arm?
-      url "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-8.16.6-darwin-aarch64.tar.gz"
-      sha256 "3c37b438ba83003ec869337c8806d638fb831e86ed487dc3d8ef70ac77adba69"
+      url "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.17.28-darwin-aarch64.tar.gz"
+      sha256 "c54fe211d6dc06df0383a06c4388f9fd112b0247b50afee4687885bfbafde0c8"
     else
-      url "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-8.16.6-darwin-x86_64.tar.gz"
-      sha256 "b17aa116ab28a6f9d64e0520687e01f4afd8de3ab25ad1c6a307e626725e1355"
+      url "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.17.28-darwin-x86_64.tar.gz"
+      sha256 "50d4fe9ec4f30c0cf9bdf3c879e4d2d61d9bc188a7dc29a1eb64e94c74a13458"
     end
   end
   #end-auto-replace
@@ -145,8 +146,8 @@ class ElasticsearchFullAT816 < Formula
   service do
     run [opt_bin/"elasticsearch"]
     working_dir var
-    log_path var/"log/elasticsearch-full@8.16.log"
-    error_log_path var/"log/elasticsearch-full@8.16.log"
+    log_path var/"log/elasticsearch-full@7.17.28.log"
+    error_log_path var/"log/elasticsearch-full@7.17.28.log"
   end
 
   test do
