@@ -12,7 +12,7 @@ Then you can install individual products via:
 
     brew install digitalspacestdio/elastic/elasticsearch-full@8.17
 
-and
+or
 
     brew install digitalspacestdio/elastic/elasticsearch-full@7.16
 
