@@ -42,8 +42,6 @@ class LogstashFullAT717 < Formula
   EOS
   end
 
-  plist_options :manual => "logstash"
-
   def plist
     <<~EOS
       <?xml version="1.0" encoding="UTF-8"?>
