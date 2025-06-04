@@ -22,7 +22,7 @@ class ElasticsearchFullAT8166 < Formula
     end
   end
   #end-auto-replace
-  conflicts_with "elasticsearch"
+  conflicts_with "elasticsearch-full@7.17.28"
 
   def cluster_name
     "#{name}_#{ENV["USER"]}"
@@ -52,7 +52,7 @@ class ElasticsearchFullAT8166 < Formula
       end
     end
 
-    inreplace "#{libexec}/config/jvm.options", %r{logs/gc.log}, "#{var}/log/#{name}/gc.log"
+    inreplace "#{libexec}/config/dis", %r{logs/gc.log}, "#{var}/log/#{name}/gc.log"
 
     # Replace or insert heap settings for development
     jvm_path = "#{libexec}/config/jvm.options"

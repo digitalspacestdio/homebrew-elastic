@@ -22,7 +22,7 @@ class ElasticsearchFullAT71728 < Formula
     end
   end
   #end-auto-replace
-  conflicts_with "elasticsearch"
+  conflicts_with "elasticsearch-full@8.16.6"
 
   def cluster_name
     "#{name}_#{ENV["USER"]}"
